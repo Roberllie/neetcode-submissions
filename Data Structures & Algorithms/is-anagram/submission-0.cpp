@@ -1,25 +1,32 @@
-#include <unordered_map>
 class Solution {
 public:
     bool isAnagram(string s, string t) {
-        if (s.size() != t.size()) return false;
-        unordered_map<char, int> palavra1;//chave letra e valor = frequência
-        unordered_map<char, int> palavra2;
+        //crio dois unordered_map para guardar o char e a frequênica em que ele aparece
+        unordered_map <char, int> map_s;
+        unordered_map <char, int> map_t;
 
-    for( int i = 0; i < s.size(); i++){
-        if(palavra1.count(s[i])){
-            palavra1[s[i]] = palavra1[s[i]] + 1;
+        if (s.size() != t.size()){
+            return false;
+        } //se tem tamanhos diferentes já retorna falso
+
+        for(int i = 0; i < s.size(); i++){ //percorro ambas Strings atribuindo cada char de cada uma aos unordered_maps criados
+            if (map_s.count(s[i])){ //se já existe esse char incrementa 1 na frequência dele
+                map_s[s[i]]++; 
+            }else{
+                map_s[s[i]] = 1; //senão, adiciona o char ao unordered_map e atribui 1 a sua frequência
+            }
+
+            if (map_t.count(t[i])){
+                map_t[t[i]]++;
+            }else{
+                map_t[t[i]]= 1;
+            }
+            
         }
-        else palavra1[s[i]] = 1;
-        if(palavra2.count(t[i])){
-            palavra2[t[i]] = palavra2[t[i]] + 1;
+        if (map_s == map_t){ //por fim, compara se ambos os map_s e map_t são iguais, ou seja, anagramas
+            return true;
         }
-        else palavra2[t[i]] = 1; 
-    }
-    
-    if(palavra1 == palavra2){
-        return true;
-    }
-    return false;
+        return false;
     }
 };
+
